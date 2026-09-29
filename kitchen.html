@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>In Her Kitchen</title>
+<style>
+  :root{--bg:#005B60;--deep:#004A4F;--panel:#0A6B70;--gold:#EBC65A;--lt:#64D2D8;--ink:#fff}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--deep);overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink)}
+  #stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;background:var(--bg)}
+  svg#scene{position:absolute;left:0;top:0;width:1280px;height:720px}
+  svg *{transform-box:view-box}
+  #logo{position:absolute;right:40px;top:26px;height:54px;opacity:.95}
+  .f{opacity:0;transition:opacity 1s ease}
+  .f.on{opacity:1}
+  #caption{position:absolute;left:70px;top:584px;width:1140px;text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:34px;line-height:1.28;font-weight:700;color:#fff;opacity:0;transition:opacity .7s}
+  #caption.on{opacity:1}
+  #sheMove{transition:transform .9s ease-in-out}
+  #sheMove.slide{transform:translateX(140px)}
+  #she{transform-origin:800px 560px}
+  #she.stumble{animation:stumble 2.6s ease-in-out 1 both}
+  #armR{transform-origin:834px 318px}
+  #armL{transform-origin:766px 318px}
+  #she.stumble #armR{animation:reach 2.6s ease-in-out 1 both}
+  #she.stumble #armL{animation:flail 2.6s ease-in-out 1 both}
+  #heartPulse{transform-box:fill-box;transform-origin:center}
+  #heartPulse.on{animation:beat 1.1s ease-in-out infinite}
+  #bubbleG{transform-box:fill-box;transform-origin:15% 100%;transform:scale(.4);transition:opacity 1s ease, transform 1.2s cubic-bezier(.2,.8,.2,1)}
+  #bubbleG.on{transform:scale(1)}
+  #ctl{position:fixed;right:14px;bottom:12px;z-index:5}
+  #ctl button{font:600 15px system-ui,sans-serif;padding:8px 14px;border-radius:999px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer}
+  #ctl button:focus-visible{outline:3px solid var(--lt);outline-offset:2px}
+  .clean #ctl{display:none}
+  @keyframes beat{0%,100%{transform:scale(1)}30%{transform:scale(1.3)}55%{transform:scale(1)}75%{transform:scale(1.16)}}
+  @keyframes stumble{
+    0%{transform:rotate(0) translateX(0)}
+    14%{transform:rotate(7deg) translateX(6px)}
+    30%{transform:rotate(16deg) translateX(20px)}
+    52%{transform:rotate(12deg) translateX(20px)}
+    78%{transform:rotate(4deg) translateX(8px)}
+    100%{transform:rotate(0) translateX(0)}}
+  @keyframes reach{0%{transform:rotate(0)}22%{transform:rotate(-22deg)}40%{transform:rotate(-82deg)}80%{transform:rotate(-82deg)}100%{transform:rotate(-20deg)}}
+  @keyframes flail{0%{transform:rotate(0)}25%{transform:rotate(38deg)}45%{transform:rotate(22deg)}100%{transform:rotate(0)}}
+  @media (prefers-reduced-motion:reduce){#she.stumble,#she.stumble #armR,#she.stumble #armL,#heartPulse.on{animation:none}.f,#caption,#bubbleG,#sheMove{transition:none}}
+</style>
+</head>
+<body>
+<div id="stage" aria-label="Animated scene: you stand in her kitchen. She stumbles, catches herself on a chair, and sits. Your heart races and you picture a room down the hall.">
+<svg id="scene" viewBox="0 0 1280 720" aria-hidden="true">
+  <rect x="0" y="560" width="1280" height="160" fill="#004A4F"/>
+  <line x1="0" y1="560" x2="1280" y2="560" stroke="#64D2D8" stroke-opacity=".35" stroke-width="2"/>
+
+  <!-- window -->
+  <g fill="none" stroke="#64D2D8" stroke-opacity=".6" stroke-width="3">
+    <rect x="1010" y="90" width="230" height="170" rx="4"/>
+    <line x1="1125" y1="90" x2="1125" y2="260"/><line x1="1010" y1="175" x2="1240" y2="175"/>
+  </g>
+  <!-- table -->
+  <g stroke="#64D2D8" stroke-opacity=".55" stroke-width="3" fill="#0A6B70">
+    <rect x="1030" y="470" width="230" height="18"/>
+    <line x1="1050" y1="488" x2="1050" y2="560"/><line x1="1240" y1="488" x2="1240" y2="560"/>
+  </g>
+  <!-- chair (back on the right) -->
+  <g stroke="#64D2D8" stroke-opacity=".7" stroke-width="3" fill="#0A6B70">
+    <rect x="880" y="472" width="112" height="14"/>
+    <line x1="890" y1="486" x2="890" y2="560"/><line x1="982" y1="486" x2="982" y2="560"/>
+    <rect x="976" y="340" width="16" height="132" rx="4"/>
+  </g>
+
+  <!-- YOU -->
+  <g id="you" class="f">
+    <g stroke="#E8F4F4" stroke-width="26" stroke-linecap="round">
+      <line x1="245" y1="440" x2="245" y2="548"/><line x1="275" y1="440" x2="275" y2="548"/>
+    </g>
+    <g stroke="#E8F4F4" stroke-width="20" stroke-linecap="round">
+      <line x1="226" y1="322" x2="222" y2="436"/><line x1="294" y1="322" x2="298" y2="436"/>
+    </g>
+    <rect x="218" y="300" width="84" height="140" rx="40" fill="#E8F4F4"/>
+    <circle cx="260" cy="262" r="36" fill="#E8F4F4"/>
+    <path id="heartPulse" d="M260 398 C238 382 232 364 244 356 C252 351 260 356 260 362 C260 356 268 351 276 356 C288 364 282 382 260 398Z" fill="#E0A32E" stroke="#7A5300" stroke-width="3" style="opacity:0"/>
+  </g>
+
+  <!-- SHE standing -->
+  <g id="sheMove" class="f">
+    <g id="she">
+      <g stroke="#EBC65A" stroke-width="26" stroke-linecap="round">
+        <line x1="785" y1="440" x2="785" y2="548"/><line x1="815" y1="440" x2="815" y2="548"/>
+      </g>
+      <g id="armL" stroke="#D8AE3C" stroke-width="20" stroke-linecap="round"><line x1="766" y1="322" x2="762" y2="436"/></g>
+      <rect x="758" y="300" width="84" height="140" rx="40" fill="#EBC65A"/>
+      <g id="armR" stroke="#D8AE3C" stroke-width="20" stroke-linecap="round"><line x1="834" y1="322" x2="838" y2="450"/></g>
+      <circle cx="800" cy="262" r="36" fill="#EBC65A"/>
+      <path d="M764 260 A36 36 0 0 1 836 260 Q800 238 764 260Z" fill="#DCE7E7"/>
+    </g>
+  </g>
+  <!-- SHE seated -->
+  <g id="sheSit" class="f">
+    <rect x="835" y="452" width="130" height="34" rx="16" fill="#EBC65A"/>
+    <rect x="835" y="470" width="28" height="88" rx="12" fill="#EBC65A"/>
+    <rect x="900" y="350" width="80" height="128" rx="38" fill="#EBC65A"/>
+    <circle cx="940" cy="316" r="36" fill="#EBC65A"/>
+    <path d="M904 314 A36 36 0 0 1 976 314 Q940 292 904 314Z" fill="#DCE7E7"/>
+  </g>
+
+  <!-- thought: the room down the hall -->
+  <g id="bubbleG" class="f">
+    <circle cx="312" cy="230" r="8" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="3"/>
+    <circle cx="334" cy="204" r="13" fill="none" stroke="#fff" stroke-opacity=".8" stroke-width="3"/>
+    <rect x="350" y="30" width="470" height="200" rx="34" fill="#0A6B70" stroke="#fff" stroke-opacity=".85" stroke-width="3"/>
+    <g fill="none" stroke="#EBC65A" stroke-width="4" stroke-linejoin="round">
+      <line x1="386" y1="196" x2="784" y2="196" stroke="#64D2D8" stroke-opacity=".6" stroke-width="3"/>
+      <rect x="408" y="150" width="210" height="44" rx="6"/>
+      <rect x="420" y="128" width="60" height="22" rx="10"/>
+      <rect x="670" y="72" width="80" height="122" rx="4"/>
+    </g>
+    <circle cx="732" cy="136" r="5" fill="#EBC65A"/>
+  </g>
+</svg>
+<img id="logo" src="logo.png" alt="The Gerontechnology Group">
+<div id="caption"></div>
+</div>
+<div id="ctl"><button id="replay" type="button">Replay</button></div>
+
+<script>
+(function(){
+  var q = new URLSearchParams(location.search);
+  var speed = parseFloat(q.get('speed')) || 1;
+  if (q.get('clean') === '1') document.body.classList.add('clean');
+  var stage = document.getElementById('stage');
+  function fit(){ var s = Math.min(innerWidth/1280, innerHeight/720); stage.style.transform = 'translate(-50%,-50%) scale(' + s + ')'; }
+  addEventListener('resize', fit); fit();
+  var $ = function(id){ return document.getElementById(id); };
+  var timers = [];
+  function at(ms, fn){ timers.push(setTimeout(fn, ms / speed)); }
+  function cap(t){
+    var c = $('caption'); c.classList.remove('on');
+    timers.push(setTimeout(function(){ c.textContent = t; c.classList.add('on'); }, 400 / speed));
+  }
+  function on(id, v){ $(id).classList.toggle('on', v !== false); }
+  function reset(){
+    timers.forEach(clearTimeout); timers = [];
+    ['you','sheMove','sheSit','bubbleG'].forEach(function(id){ $(id).classList.remove('on'); });
+    $('sheMove').classList.remove('slide'); $('she').classList.remove('stumble');
+    $('heartPulse').classList.remove('on'); $('heartPulse').style.opacity = 0;
+    $('caption').classList.remove('on'); $('caption').textContent = '';
+  }
+  function showAll(){
+    on('you'); on('sheSit'); on('bubbleG'); $('heartPulse').style.opacity = 1;
+    $('caption').textContent = 'You have not said a word about it. But you are already there, in your head.';
+    $('caption').classList.add('on');
+  }
+  function play(){
+    reset();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches){ showAll(); return; }
+    at(300,   function(){ on('you'); cap('You are standing in her kitchen.'); });
+    at(3000,  function(){ on('sheMove'); cap('She just fell. Not badly. Not this time.'); });
+    at(3800,  function(){ $('she').classList.add('stumble'); });
+    at(6600,  function(){ $('sheMove').classList.add('slide'); });
+    at(7600, function(){ $('sheMove').classList.remove('on'); on('sheSit'); });
+    at(7900, function(){ $('heartPulse').style.opacity = 1; $('heartPulse').classList.add('on'); cap('But your heart is still racing a little.'); });
+    at(11600, function(){ cap('And before you say anything, you are already picturing the room down the hall where you would move her.'); on('bubbleG'); });
+    at(16900, function(){ cap('You have not said a word about it. But you are already there, in your head.'); });
+  }
+  $('replay').addEventListener('click', play);
+  addEventListener('keydown', function(e){ if (e.code === 'Space' || e.key === 'r'){ e.preventDefault(); play(); }});
+  play();
+})();
+</script>
+</body>
+</html>

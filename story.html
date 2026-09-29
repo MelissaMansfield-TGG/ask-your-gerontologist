@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Plant the Seed, a True Story</title>
+<style>
+  :root{--bg:#005B60;--deep:#004A4F;--panel:#0A6B70;--gold:#EBC65A;--lt:#64D2D8;--ink:#fff}
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--deep);overflow:hidden;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink)}
+  #stage{position:absolute;left:50%;top:50%;width:1280px;height:720px;transform-origin:center center;background:var(--bg)}
+  svg#scene{position:absolute;left:0;top:0;width:1280px;height:720px}
+  svg *{transform-box:view-box}
+  #logo{position:absolute;right:40px;top:24px;height:54px;opacity:.95}
+  #kicker{position:absolute;left:60px;top:34px;font-size:22px;letter-spacing:.12em;text-transform:uppercase;color:var(--lt);font-weight:700}
+  #kicker span{color:var(--gold)}
+  .f{opacity:0;transition:opacity .9s ease}
+  .f.on{opacity:1}
+  #caption{position:absolute;left:70px;top:588px;width:1140px;text-align:center;font-family:Georgia,"Times New Roman",serif;font-size:34px;line-height:1.28;font-weight:700;color:#fff;opacity:0;transition:opacity .6s}
+  #caption.on{opacity:1}
+  #caption.big{font-size:52px}
+  #melissa{transition:transform 1.6s ease-in-out, opacity .8s}
+  #mother.sway{animation:sway 2.4s ease-in-out 2}
+  #clock{opacity:0;transition:opacity .6s}
+  #clock.on{opacity:1}
+  #hand{transform-origin:640px 250px}
+  #clock.on #hand{animation:spin 2.4s linear infinite}
+  #glow{opacity:0;transition:opacity 1.6s}
+  #glow.on{opacity:.85}
+  .chip{position:absolute;left:850px;width:380px;padding:12px 18px;background:var(--panel);border-left:5px solid var(--gold);font-family:Georgia,serif;font-size:25px;font-weight:700;line-height:1.2;opacity:0;transform:translateY(10px);transition:opacity .7s, transform .7s}
+  .chip.on{opacity:1;transform:none}
+  #c1{top:96px}#c2{top:164px}#c3{top:250px}
+  #bubbleRow{position:absolute;left:60px;top:84px;width:760px;display:none;flex-direction:column;align-items:flex-start}
+  #bubbleRow.show{display:flex;animation:pop .5s ease-out both}
+  #bubbleRow .who{font-size:18px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin:0 8px 5px;color:var(--lt)}
+  #bubble{background:#F6F3EA;color:#0B3B3E;border-left:5px solid var(--gold);border-radius:6px;font-size:30px;line-height:1.28;padding:13px 24px;font-weight:700;max-width:740px}
+  .dots{display:inline-flex;gap:8px;align-items:center;height:36px}
+  .dots i{width:10px;height:10px;border-radius:50%;background:currentColor;opacity:.35;animation:blink 1s infinite}
+  .dots i:nth-child(2){animation-delay:.2s}.dots i:nth-child(3){animation-delay:.4s}
+  #month{position:absolute;left:850px;top:322px;width:380px;text-align:center;color:var(--gold);font-family:Georgia,serif;font-size:28px;font-style:italic;opacity:0;transition:opacity .8s}
+  #month.on{opacity:1}
+  #garden{position:absolute;left:850px;top:96px;width:380px;height:480px;transform:scale(.72);transform-origin:50% 100%}
+  #garden svg{width:100%;height:100%;overflow:visible}
+  .g{opacity:0;transform-box:fill-box;transform-origin:50% 100%;transform:scale(.25);transition:opacity 1s ease, transform 1.6s cubic-bezier(.2,.8,.2,1)}
+  .g.on{opacity:1;transform:scale(1)}
+  #seedDrop{transform:translateY(-200px);opacity:0;transition:transform 1.4s cubic-bezier(.5,0,.9,.6), opacity .5s}
+  #seedDrop.on{transform:none;opacity:1}
+  #ctl{position:fixed;right:14px;bottom:12px;z-index:5}
+  #ctl button{font:600 15px system-ui,sans-serif;padding:8px 14px;border-radius:999px;border:1px solid var(--gold);background:transparent;color:var(--gold);cursor:pointer}
+  #ctl button:focus-visible{outline:3px solid var(--lt);outline-offset:2px}
+  .clean #ctl{display:none}
+  @keyframes pop{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  @keyframes blink{0%,80%,100%{opacity:.25}40%{opacity:1}}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes sway{0%,100%{transform:translate(300px,540px) scale(.5) rotate(0)}30%{transform:translate(300px,540px) scale(.5) rotate(7deg)}65%{transform:translate(300px,540px) scale(.5) rotate(-5deg)}}
+  @media (prefers-reduced-motion:reduce){#mother.sway,#clock.on #hand{animation:none}.f,#caption,#melissa,.chip,#glow,.g,#seedDrop{transition:none}#bubbleRow.show{animation:none}}
+</style>
+</head>
+<body>
+<div id="stage" aria-label="Animated story from a community in Honolulu: a mother who kept falling decides on her own to move in.">
+  <div id="kicker">A true story <span>&#183;</span> A community in Honolulu <span>&#183;</span> Details changed</div>
+  <img id="logo" src="logo.png" alt="The Gerontechnology Group">
+
+  <svg id="scene" viewBox="0 0 1280 720" aria-hidden="true">
+    <defs>
+      <g id="fig" stroke-linecap="round">
+        <g stroke="currentColor" stroke-width="26"><line x1="-15" y1="-120" x2="-15" y2="-14"/><line x1="15" y1="-120" x2="15" y2="-14"/></g>
+        <g stroke="currentColor" stroke-width="20"><line x1="-34" y1="-238" x2="-38" y2="-124"/><line x1="34" y1="-238" x2="38" y2="-124"/></g>
+        <rect x="-42" y="-262" width="84" height="142" rx="40" fill="currentColor"/>
+        <circle cx="0" cy="-298" r="36" fill="currentColor"/>
+      </g>
+    </defs>
+    <line x1="40" y1="540" x2="800" y2="540" stroke="#64D2D8" stroke-opacity=".45" stroke-width="3"/>
+    <!-- her home -->
+    <g id="house" class="f" fill="#0A6B70" stroke="#64D2D8" stroke-width="4" stroke-linejoin="round">
+      <rect x="120" y="330" width="330" height="210"/>
+      <path d="M100 336 L285 210 L470 336Z" fill="#0A6B70"/>
+      <rect id="glow" x="164" y="376" width="64" height="70" fill="#EBC65A" stroke="none"/>
+      <rect x="164" y="376" width="64" height="70" fill="none"/>
+      <rect x="342" y="376" width="64" height="70" fill="none"/>
+      <rect x="252" y="430" width="66" height="110" fill="#004A4F" stroke="#EBC65A"/>
+    </g>
+    <!-- mother at her door -->
+    <g id="motherWrap" class="f"><g id="mother" transform="translate(285 540) scale(.5)" style="color:#EBC65A"><use href="#fig"/></g></g>
+    <!-- Melissa -->
+    <g id="melissa" style="transform:translateX(-120px);opacity:0"><g transform="translate(20 540) scale(.5)" style="color:#E8F4F4"><use href="#fig"/></g></g>
+    <!-- hours passing -->
+    <g id="clock">
+      <circle cx="640" cy="250" r="46" fill="none" stroke="#EBC65A" stroke-width="5"/>
+      <line x1="640" y1="250" x2="640" y2="216" stroke="#EBC65A" stroke-width="5" stroke-linecap="round"/>
+      <line id="hand" x1="640" y1="250" x2="640" y2="214" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    </g>
+  </svg>
+
+  <div class="chip" id="c1">Dinner with us.</div>
+  <div class="chip" id="c2">A room, ready whenever she wants one.</div>
+  <div class="chip" id="c3">No pressure. No deadline.</div>
+
+  <div id="garden" aria-hidden="true">
+    <svg viewBox="0 0 380 480">
+      <path d="M30 440 Q190 400 350 440" fill="none" stroke="#64D2D8" stroke-opacity=".7" stroke-width="4" stroke-linecap="round"/>
+      <g id="seedDrop"><ellipse cx="190" cy="424" rx="14" ry="9" fill="#EBC65A"/></g>
+      <g class="g" id="gSprout1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M190 424 C190 396 190 376 190 356" stroke="#64D2D8" stroke-width="6"/>
+        <path d="M190 368 C166 362 156 346 160 336 C178 336 190 350 190 368Z" stroke="#64D2D8" stroke-width="4"/>
+        <path d="M190 362 C214 356 224 340 220 330 C202 330 190 344 190 362Z" stroke="#64D2D8" stroke-width="4"/>
+      </g>
+      <g class="g" id="gSprout2" fill="none" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M190 424 C188 350 192 290 190 230" stroke="#64D2D8" stroke-width="7"/>
+        <path d="M190 330 C156 324 138 298 144 284 C172 286 188 304 190 330Z" stroke="#64D2D8" stroke-width="4"/>
+        <path d="M190 300 C226 294 244 268 238 254 C210 256 192 274 190 300Z" stroke="#64D2D8" stroke-width="4"/>
+        <path d="M190 254 C168 244 160 224 166 212 C184 216 190 234 190 254Z" stroke="#64D2D8" stroke-width="4"/>
+        <path d="M190 246 C214 236 222 216 216 204 C198 208 190 226 190 246Z" stroke="#64D2D8" stroke-width="4"/>
+      </g>
+      <g class="g" id="gBloom">
+        <circle cx="190" cy="192" r="15" fill="#EBC65A"/>
+        <circle cx="190" cy="192" r="28" fill="none" stroke="#EBC65A" stroke-opacity=".55" stroke-width="3"/>
+      </g>
+    </svg>
+  </div>
+  <div id="month">A month later</div>
+
+  <div id="bubbleRow"><div class="who">Mother</div><div id="bubble"></div></div>
+  <div id="caption"></div>
+</div>
+<div id="ctl"><button id="replay" type="button">Replay</button></div>
+
+<script>
+(function(){
+  var q = new URLSearchParams(location.search);
+  var speed = parseFloat(q.get('speed')) || 1;
+  if (q.get('clean') === '1') document.body.classList.add('clean');
+  var stage = document.getElementById('stage');
+  function fit(){ var s = Math.min(innerWidth/1280, innerHeight/720); stage.style.transform = 'translate(-50%,-50%) scale(' + s + ')'; }
+  addEventListener('resize', fit); fit();
+  var $ = function(id){ return document.getElementById(id); };
+  var timers = [];
+  function at(ms, fn){ timers.push(setTimeout(fn, ms / speed)); }
+  function cap(t, big){
+    var c = $('caption'); c.classList.remove('on');
+    timers.push(setTimeout(function(){ c.classList.toggle('big', !!big); c.textContent = t; c.classList.add('on'); }, 350 / speed));
+  }
+  function on(id, v){ $(id).classList.toggle('on', v !== false); }
+  var FADE = ['house','motherWrap'];
+  function reset(){
+    timers.forEach(clearTimeout); timers = [];
+    FADE.forEach(function(id){ $(id).classList.remove('on'); });
+    ['glow','clock','c1','c2','c3','month','gSprout1','gSprout2','gBloom','seedDrop'].forEach(function(id){ $(id).classList.remove('on'); });
+    var m = $('melissa'); m.style.opacity = 0; m.style.transform = 'translateX(-120px)';
+    $('mother').classList.remove('sway');
+    $('bubbleRow').classList.remove('show'); $('bubble').textContent = '';
+    $('caption').classList.remove('on','big'); $('caption').textContent = '';
+  }
+  function showAll(){
+    on('house'); on('motherWrap'); on('glow'); on('gBloom'); on('gSprout2'); on('c1'); on('c2'); on('c3'); on('month');
+    var m = $('melissa'); m.style.opacity = 1; m.style.transform = 'translateX(560px)';
+    $('bubbleRow').classList.add('show'); $('bubble').textContent = 'I have decided. I want to move in, full time.';
+    $('caption').classList.add('on','big'); $('caption').textContent = 'That was her decision.';
+  }
+  function play(){
+    reset();
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches){ showAll(); return; }
+    at(300,   function(){ on('house'); });
+    at(700,   function(){ cap('A family came to me.'); });
+    at(2500,  function(){ on('motherWrap'); cap('Their mother kept falling at home.'); $('mother').classList.add('sway'); });
+    at(6300,  function(){ cap('They loved her. They wanted her moved in that week.'); });
+    at(14300, function(){ var m=$('melissa'); m.style.opacity=1; m.style.transform='translateX(360px)'; cap('So instead of moving her, I went to her.'); });
+    at(24300, function(){ on('clock'); cap('I sat with her for hours and mostly listened.'); });
+    at(30300, function(){ on('clock', false); on('glow'); cap('What came up was not the falls. It was the house.'); });
+    at(34300, function(){ cap('The house she and her husband had built their life in.'); });
+    at(39600, function(){ cap('She was not ready to leave that behind.'); });
+    at(42500, function(){ cap('So I did not push the move. I planted the seed.'); });
+    at(42800, function(){ on('seedDrop'); });
+    at(45800, function(){ on('c1'); cap('I told her we would love to have her join us.'); });
+    at(47600, function(){ on('c2'); });
+    at(52600, function(){ on('c3'); });
+    at(55600, function(){ $('melissa').style.transform='translateX(600px)'; cap('Then I stepped back and let her live with the idea.'); });
+    at(58600, function(){ on('month'); on('seedDrop', false); on('gSprout1'); });
+    at(60600, function(){ on('gSprout1', false); on('gSprout2'); cap('She called me herself.'); });
+    at(62300, function(){
+      $('caption').classList.remove('on');
+      var row=$('bubbleRow'), b=$('bubble'); row.classList.add('show');
+      b.innerHTML='<span class="dots"><i></i><i></i><i></i></span>';
+      timers.push(setTimeout(function(){ b.textContent='I have decided. I want to move in, full time.'; }, 450/speed));
+    });
+    at(64600, function(){ on('gBloom'); });
+    at(66300, function(){ cap('That was her decision.', true); });
+    at(69200, function(){ cap('Not her family’s. Not mine.'); });
+  }
+  $('replay').addEventListener('click', play);
+  addEventListener('keydown', function(e){ if (e.code === 'Space' || e.key === 'r'){ e.preventDefault(); play(); }});
+  play();
+})();
+</script>
+</body>
+</html>
